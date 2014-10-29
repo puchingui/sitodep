@@ -21,11 +21,15 @@ public class Mantenimiento extends Identificable {
 	
 	@ManyToOne
 	@DescriptionsList
+	@NoCreate
+	@NoModify
 	private Empleado tecnico;
 	
 	@ManyToOne
 	@ReferenceView("Simple")
 	@SearchAction("Mantenimiento.buscarProducto")
+	@NoCreate
+	@NoModify
 	private Producto producto;
 	
 	@Stereotype("MEMO")

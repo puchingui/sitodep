@@ -14,9 +14,10 @@ import org.openxava.calculators.*;
 @Entity
 @Tab(properties="conduce, fecha, cliente.nombre, motivo.descripcion, producto.serial, producto.marca.nombre, producto.modelo, recibido")
 @Views({
-	@View(members="Datos {conduce, fecha, recibido; departamento, motivo; cliente; producto, "
+	@View(members="Datos {conduce, fecha, recibido; departamento, motivo; cliente; producto; "
 					+ "Otros [bandejaSuperior, bandejaInferior, bandejaADF, toner;"
-					+ "cableUSB, cableCorriente, fuente] observaciones} Recibo {reciboDePrestamo}"),
+					+ "cableUSB, cableCorriente, fuente];"
+					+ "observaciones} Recibo {reciboDePrestamo}"),
 	@View(name="Simple", members="conduce; cliente; producto"),
 	@View(name="NoProducto", members="Datos {conduce, fecha, recibido; departamento, motivo; cliente} Recibo {reciboDePrestamo}"),
 	@View(name="NoCliente", members="Datos {conduce, fecha, recibido; departamento, motivo; producto} Recibo {reciboDePrestamo}")
@@ -56,6 +57,7 @@ public class Prestamo {
 	@Required
 	@SearchAction("Prestamo.buscarProducto")
 	@NoModify
+	@NoCreate
 	private Producto producto;
 	
 	private boolean bandejaSuperior;
@@ -76,6 +78,7 @@ public class Prestamo {
 	private String observaciones;
 	
 	@OneToOne(mappedBy="prestamo", cascade=CascadeType.REMOVE)
+	@NoModify
 	private ReciboDePrestamo reciboDePrestamo;
 	
 	public String getConduce() {

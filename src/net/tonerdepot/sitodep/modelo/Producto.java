@@ -15,7 +15,7 @@ import org.openxava.annotations.*;
 			properties="serial, tipo.descripcion, marca.nombre, modelo, ubicacion",
 			baseCondition="vendido = true")
 })
-@View(name="Simple", members="serial, tipo, marca, modelo")
+@View(name="Simple", members="serial, tipo; marca, modelo")
 public class Producto {
 
 	@Id

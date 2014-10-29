@@ -25,6 +25,8 @@ public class ReciboDePrestamo extends Identificable {
 	@OneToOne
 	@ReferenceView("Simple")
 	@SearchAction("ReciboDePrestamo.buscarPrestamo")
+	@NoModify
+	@NoCreate
 	private Prestamo prestamo;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)

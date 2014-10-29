@@ -47,10 +47,14 @@ public class OrdenTrabajo extends Identificable {
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=true)
 	@DescriptionsList
+	@NoCreate
+	@NoModify
 	private Empleado recibido;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=true)
 	@DescriptionsList
+	@NoCreate
+	@NoModify
 	private Empleado responsable;
 	
 	@ManyToOne
@@ -86,6 +90,8 @@ public class OrdenTrabajo extends Identificable {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@DescriptionsList
+	@NoCreate
+	@NoModify
 	private Estado estado;
 	
 	@Stereotype("MEMO")
@@ -108,6 +114,8 @@ public class OrdenTrabajo extends Identificable {
 	 */
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@DescriptionsList
+	@NoCreate
+	@NoModify
 	private Empleado reparador;
 	
 	private Date fechaSolucion;

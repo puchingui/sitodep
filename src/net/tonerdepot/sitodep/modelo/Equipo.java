@@ -9,7 +9,8 @@ import org.openxava.annotations.*;
 @Entity
 @Tab(properties="serial, tipo.descripcion, marca.nombre, modelo, cliente.nombre")
 @Views({
-	@View(members="serial, tipo, marca, modelo; "
+	@View(members="serial, tipo;"
+			+ "marca, modelo; "
 			+ "descripcion; "
 			+ "activo;"
 			+ "foto;"
@@ -17,7 +18,8 @@ import org.openxava.annotations.*;
 			+ "cliente;"
 			+ "observacion;"
 			+ "ordenes"),
-	@View(name="ParaOrden", members="serial, tipo, marca, modelo; "
+	@View(name="ParaOrden", members="serial, tipo;"
+			+ "marca, modelo; "
 			+ "foto;"
 			+ "masFotos")
 })
