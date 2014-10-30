@@ -31,10 +31,14 @@ public class Equipo {
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@DescriptionsList
+	@NoCreate
+	@NoModify
 	private Tipo tipo;
 
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@DescriptionsList
+	@NoCreate
+	@NoModify
 	private Marca marca;
 	
 	@Column(length=32)
@@ -56,6 +60,7 @@ public class Equipo {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@ReferenceView("Simple")
+	@NoModify
 	private Cliente cliente;
 	
 	@Stereotype("MEMO")
