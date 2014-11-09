@@ -157,7 +157,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 }
 %>
 </tr>
-<jsp:include page="collectionTotals.jsp" />
+<%@ include file="editors/collectionTotals.jsp" %>
 </table>
 <% if (resizeColumns && scrollSupported) { %>
 </div>

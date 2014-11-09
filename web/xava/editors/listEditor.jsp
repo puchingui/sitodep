@@ -439,41 +439,35 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 <%
 for (int c=0; c<model.getColumnCount(); c++) {
 	MetaProperty p = tab.getMetaProperty(c);
-	String align =p.isNumber() && !p.hasValidValues()?"text-align: right; ":"";	
-	String cellStyle = align + style.getTotalCellStyle();
-	int columnWidth = tab.getColumnWidth(c);		 		
-	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
+	String align =p.isNumber() && !p.hasValidValues()?"text-align: right; ":"";
+	String cellStyle = align + style.getTotalCellStyle(); 
 	
 	if (tab.hasTotal(c)) {
 		String ftotal = WebEditors.format(request, p, tab.getTotal(c), errors, view.getViewName(), true);
 	%>
-	<td class="<%=style.getTotalCell()%>" style="<%=cellStyle%>; padding-right: 0px">
-		<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-			<nobr>
-			<% if (!tab.isFixedTotal(c) && XavaPreferences.getInstance().isSummationInList()) { %>
-				<xava:image action='List.removeColumnSum' argv='<%="property="+p.getQualifiedName() + collectionArgv%>' cssStyle="vertical-align: top;"/>
-			<% } %>
-			<%=ftotal%>&nbsp;
-			</nobr>
-		</div>		
-	</td>	
+	<td class="<%=style.getTotalCell()%>" style="<%=cellStyle%>">	 
+	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden;">	
+	<nobr>
+	<% if (!tab.isFixedTotal(c) && XavaPreferences.getInstance().isSummationInList()) { %>
+	<xava:image action='List.removeColumnSum' argv='<%="property="+p.getQualifiedName() + collectionArgv%>' cssStyle="vertical-align: top;"/>
+	<% } %>
+	<%=ftotal%>&nbsp;
+	</nobr>	
+	</div>	
+	</td>
 	<%	
 	}
 	else if (XavaPreferences.getInstance().isSummationInList() && tab.isTotalCapable(c)) { 
 	%>
-	<td class="<%=style.getTotalCapableCell()%>" style="<%=style.getTotalCapableCellStyle() %>">
-		<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-			<xava:action action='List.sumColumn' argv='<%="property="+p.getQualifiedName() + collectionArgv%>'/>&nbsp;
-		</div>	
+	<td class="<%=style.getTotalCapableCell()%>" style="<%=style.getTotalCapableCellStyle() %>">	
+		<xava:action action='List.sumColumn' argv='<%="property="+p.getQualifiedName() + collectionArgv%>'/>&nbsp;
 	</td>
 	<%
 	}
 	else if (tab.hasTotal(c + 1)) { 
 	%>
-	<td class="<%=style.getTotalLabelCell()%>" style="<%=style.getTotalLabelCellStyle()%>">
-		<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
+	<td style="<%=style.getTotalLabelCellStyle()%>">	
 		<%=tab.getTotalLabel(0, c + 1)%>&nbsp;
-		</div>	
 	</td>
 	<%
 	}	
@@ -497,26 +491,22 @@ for (int c=0; c<model.getColumnCount(); c++) {
 	MetaProperty p = tab.getMetaProperty(c);
 	String align =p.isNumber() && !p.hasValidValues()?"text-align: right; ":"";
 	String cellStyle = align + style.getTotalCellStyle(); 
-	int columnWidth = tab.getColumnWidth(c);		 		
-	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
+	
 	if (tab.hasTotal(i, c)) {
 		String ftotal = WebEditors.format(request, p, tab.getTotal(i, c), errors, view.getViewName(), true);
 	%> 	
 	<td class="<%=style.getTotalCell()%>" style="<%=cellStyle%>">
-	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-	<nobr>
+	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden;">
 	<%=ftotal%>&nbsp;
 	</nobr>	
 	</div>	
-	</td>	
+	</td>
 	<%	
 	}
 	else if (tab.hasTotal(i, c + 1)) { 
 	%>
-	<td class="<%=style.getTotalLabelCell()%>" style="<%=style.getTotalLabelCellStyle()%>">
-		<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
+	<td style="<%=style.getTotalLabelCellStyle()%>">	
 		<%=tab.getTotalLabel(i, c + 1)%>&nbsp;
-		</div>
 	</td>
 	<%	
 	}

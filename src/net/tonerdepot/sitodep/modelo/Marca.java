@@ -10,6 +10,8 @@ public class Marca extends Identificable {
 	@Required
 	@Column(length=50)
 	private String nombre;
+	
+	/** Region Getter and Setters **/
 
 	public String getNombre() {
 		return nombre;

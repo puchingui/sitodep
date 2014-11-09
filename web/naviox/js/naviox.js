@@ -81,7 +81,7 @@ naviox.goBack = function(folderOid) {
 
 naviox.refreshModulesList = function(modulesList) { 
 	if (modulesList == null) {
-		window.location=openxava.location="..";
+		alert("Error refreshing current folder"); 
 		return;
 	}
 	$('#modules_list_core').html(modulesList);
@@ -91,7 +91,7 @@ naviox.refreshModulesList = function(modulesList) {
 
 naviox.refreshSearchModulesList = function(modulesList) { 
 	if (modulesList == null) {
-		window.location=openxava.location="..";
+		alert("Error searching"); 
 		return;
 	}
 	$('#modules_list_core').html(modulesList);
@@ -101,14 +101,11 @@ naviox.refreshSearchModulesList = function(modulesList) {
 
 naviox.refreshFolderModulesList = function(modulesList) {
 	if (modulesList == null) {
-		window.location=openxava.location=".."
+		alert("Error going to folder"); 
 		return;
 	}
 	$('#modules_list_content').append("<td></td>"); 
-	$('#modules_list_content').children().last().html(modulesList);
-	
-	$('.modules-list-header').width($(window).width()); 
-	
+	$('#modules_list_content').children().last().html(modulesList);	
 	var box = $('#modules_list_box');
     box.animate({
     		left: -box.outerWidth() / 2
@@ -116,31 +113,26 @@ naviox.refreshFolderModulesList = function(modulesList) {
     	function() {
     		$('#modules_list_content').children().first().remove();
     		box.css("left", "0");
-    		naviox.watchSearch();
-    		$('.modules-list-header').css("width", "100%"); 
+    		naviox.watchSearch(); 
     	}
     );
 }
 
 naviox.refreshFolderBackModulesList = function(modulesList) {
 	if (modulesList == null) {
-		window.location=openxava.location="..";
+		alert("Error going folder"); 
 		return;
 	}
 	$('#modules_list_content').prepend("<td></td>"); 
 	var box = $('#modules_list_box');
 	box.css("left", "-" + box.outerWidth() + "px");
 	$('#modules_list_content').children().first().html(modulesList);
-
-	$('.modules-list-header').width($(window).width()); 
-		
     box.animate({
     		left: 0 
     	},    	
     	function() {
     		$('#modules_list_content').children().last().remove();
     		naviox.watchSearch(); 
-    		$('.modules-list-header').css("width", "100%"); 
     	}
     );    
 }
