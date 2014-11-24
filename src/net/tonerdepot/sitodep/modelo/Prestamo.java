@@ -1,5 +1,6 @@
 package net.tonerdepot.sitodep.modelo;
 
+import java.text.*;
 import java.util.*;
 
 import javax.persistence.*;
@@ -7,9 +8,11 @@ import javax.persistence.*;
 import net.tonerdepot.sitodep.modelo.Producto.Ubicacion;
 import net.tonerdepot.sitodep.validators.*;
 
+import org.apache.commons.beanutils.*;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
+import org.openxava.jpa.*;
 
 @Entity
 @Tab(properties="conduce, fecha, cliente.nombre, motivo.descripcion, producto.serial, producto.marca.nombre, producto.modelo, recibido")
@@ -17,7 +20,7 @@ import org.openxava.calculators.*;
 	@View(members="Datos {conduce, fecha, recibido; departamento, motivo; cliente; producto; "
 					+ "Otros [bandejaSuperior, bandejaInferior, bandejaADF, toner;"
 					+ "cableUSB, cableCorriente, fuente];"
-					+ "observaciones} Recibo {reciboDePrestamo}"),
+					+ "observaciones} Recibo {reciboDePrestamo} Mantenimientos {mantenimientos}"),
 	@View(name="Simple", members="conduce; cliente; producto"),
 	@View(name="NoProducto", members="Datos {conduce, fecha, recibido; departamento, motivo; cliente} Recibo {reciboDePrestamo}"),
 	@View(name="NoCliente", members="Datos {conduce, fecha, recibido; departamento, motivo; producto} Recibo {reciboDePrestamo}")
@@ -80,6 +83,10 @@ public class Prestamo {
 	@OneToOne(mappedBy="prestamo", cascade=CascadeType.REMOVE)
 	@NoModify
 	private ReciboDePrestamo reciboDePrestamo;
+	
+	@OneToMany(mappedBy="prestamo")
+	@ListAction("ManyToMany.new")
+	private Collection<Mantenimiento> mantenimientos;
 	
 	public String getConduce() {
 		return conduce;
@@ -226,5 +233,40 @@ public class Prestamo {
 	@AssertTrue(message="No puede prestar un producto vendido")
 	private boolean productoNoVendido() {
 		return !producto.isVendido();
+	}
+
+	public Collection<Mantenimiento> getMantenimientos() {
+		return mantenimientos;
+	}
+
+	public void setMantenimientos(Collection<Mantenimiento> mantenimientos) {
+		this.mantenimientos = mantenimientos;
+	}
+
+	/***********************************************/
+	
+	public void darMantenimiento() throws Exception {
+		Date now = new Date();
+		int dia = now.getDay();
+		int mes = now.getMonth();
+		int anio = now.getYear();
+		String fechaActual = (Integer.toString(dia) +"");
+		
+		/* var hoy = new Date();
+		dia = hoy.getDate();
+		mes = hoy.getMonth();
+		anio= hoy.getFullYear();
+		fecha_actual = String(dia+"/"+mes+"/"+anio);
+		fecha_actual = new Date(fecha_actual);
+		alert(fecha_actual); */
+		
+		
+		Mantenimiento mantenimiento = new Mantenimiento();
+		mantenimiento.setOid(null);
+		mantenimiento.setFecha();
+		mantenimiento.setPrestamo(this);
+		mantenimiento.setProducto(this.getProducto());
+		XPersistence.getManager().persist(mantenimiento);
+		this.mantenimientos.add(mantenimiento);
 	}
 }

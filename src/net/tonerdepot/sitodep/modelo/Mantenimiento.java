@@ -34,6 +34,9 @@ public class Mantenimiento extends Identificable {
 	
 	@Stereotype("MEMO")
 	private String reporte;
+	
+	@ManyToOne
+	private Prestamo prestamo;
 
 	public Date getFecha() {
 		return fecha;
@@ -70,5 +73,13 @@ public class Mantenimiento extends Identificable {
 	@AssertTrue(message="El producto elegido no requiere mantenimiento")
 	private boolean productoValidator() {
 		return producto.isPrestado();
+	}
+
+	public Prestamo getPrestamo() {
+		return prestamo;
+	}
+
+	public void setPrestamo(Prestamo prestamo) {
+		this.prestamo = prestamo;
 	}
 }
