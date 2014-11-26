@@ -57,7 +57,11 @@
 		<accion nombre="buscarProducto" 
 			clase="net.tonerdepot.sitodep.actions.BuscarProductoDesdePrestamoAction"
 			oculta="true" imagen="images/search.gif"/>
-  
+			
+		<accion nombre="darMantenimiento"
+			modo="detail" 
+			clase="net.tonerdepot.sitodep.actions.DarMantenimientoDesdePrestamoAction" />
+			  
 	</controlador>
 	
 	<!-- ReciboDePrestamo -->

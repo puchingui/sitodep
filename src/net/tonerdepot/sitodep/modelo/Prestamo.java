@@ -1,5 +1,6 @@
 package net.tonerdepot.sitodep.modelo;
 
+import java.text.*;
 import java.util.*;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import net.tonerdepot.sitodep.validators.*;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
+import org.openxava.jpa.*;
 
 @Entity
 @Tab(properties="conduce, fecha, cliente.nombre, motivo.descripcion, producto.serial, producto.marca.nombre, producto.modelo, recibido")
@@ -229,6 +231,20 @@ public class Prestamo {
 		producto.setUbicacion(Producto.Ubicacion.Prestado);
 	}
 	
+	public void darMantenimiento() throws ParseException {
+		Date now = new Date(System.currentTimeMillis());
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
+		now = df.parse(df.format(now));
+
+		Mantenimiento mantenimiento = new Mantenimiento();
+		mantenimiento.setOid(null);
+		mantenimiento.setFecha(now);
+		mantenimiento.setPrestamo(this);
+		XPersistence.getManager().persist(mantenimiento);
+		this.mantenimientos.add(mantenimiento);
+	}
+	
 	@PreRemove
 	private void validateOnRemove() {
 		if(producto.isPrestado()) {
@@ -241,4 +257,6 @@ public class Prestamo {
 	private boolean productoNoVendido() {
 		return !producto.isVendido();
 	}
+	
+	
 }
