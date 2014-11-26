@@ -9,9 +9,9 @@ import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 
 @Entity
-@Tab(properties="fecha, tecnico.nombre, producto.serial, reporte")
+@Tab(properties="fecha, tecnico.nombre, prestamo.producto.serial, reporte")
 @Views({
-	@View(members="fecha, tecnico; producto; reporte"),
+	@View(members="Datos {fecha, tecnico; reporte} Prestamo {prestamo}"),
 	@View(name="NoProducto", members="fecha, tecnico; reporte")
 })
 public class Mantenimiento extends Identificable {
@@ -27,10 +27,9 @@ public class Mantenimiento extends Identificable {
 	
 	@ManyToOne
 	@ReferenceView("Simple")
-	@SearchAction("Mantenimiento.buscarProducto")
 	@NoCreate
 	@NoModify
-	private Producto producto;
+	private Prestamo prestamo;
 	
 	@Stereotype("MEMO")
 	private String reporte;
@@ -51,14 +50,6 @@ public class Mantenimiento extends Identificable {
 		this.tecnico = tecnico;
 	}
 
-	public Producto getProducto() {
-		return producto;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
-	
 	public String getReporte() {
 		return reporte;
 	}
@@ -66,9 +57,12 @@ public class Mantenimiento extends Identificable {
 	public void setReporte(String reporte) {
 		this.reporte = reporte;
 	}
-	
-	@AssertTrue(message="El producto elegido no requiere mantenimiento")
-	private boolean productoValidator() {
-		return producto.isPrestado();
+
+	public Prestamo getPrestamo() {
+		return prestamo;
+	}
+
+	public void setPrestamo(Prestamo prestamo) {
+		this.prestamo = prestamo;
 	}
 }

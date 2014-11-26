@@ -46,12 +46,6 @@ public class Producto {
 	@ListProperties("conduce, fecha, cliente.codigo, cliente.nombre, motivo.descripcion, recibido")
 	private Collection<Prestamo> prestamos;
 	
-	@OneToMany(mappedBy="producto", cascade=CascadeType.REMOVE)
-	@CollectionView("NoProducto")
-	@ListAction("ManyToMany.new")
-	@ListProperties("fecha, tecnico.nombre, producto.serial, reporte")
-	private Collection<Mantenimiento> mantenimientos;
-	
 	@Hidden
 	private boolean prestado;
 	
@@ -120,14 +114,6 @@ public class Producto {
 	public void setPrestamos(Collection<Prestamo> prestamos) {
 		this.prestamos = prestamos;
 	}
-
-	public Collection<Mantenimiento> getMantenimientos() {
-		return mantenimientos;
-	}
-
-	public void setMantenimientos(Collection<Mantenimiento> mantenimientos) {
-		this.mantenimientos = mantenimientos;
-	}	
 	
 	public boolean isPrestado() {
 		return prestado;

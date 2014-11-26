@@ -17,7 +17,8 @@ import org.openxava.calculators.*;
 	@View(members="Datos {conduce, fecha, recibido; departamento, motivo; cliente; producto; "
 					+ "Otros [bandejaSuperior, bandejaInferior, bandejaADF, toner;"
 					+ "cableUSB, cableCorriente, fuente];"
-					+ "observaciones} Recibo {reciboDePrestamo}"),
+					+ "observaciones} Recibo {reciboDePrestamo} "
+					+ "Mantenimientos {mantenimientos}"),
 	@View(name="Simple", members="conduce; cliente; producto"),
 	@View(name="NoProducto", members="Datos {conduce, fecha, recibido; departamento, motivo; cliente} Recibo {reciboDePrestamo}"),
 	@View(name="NoCliente", members="Datos {conduce, fecha, recibido; departamento, motivo; producto} Recibo {reciboDePrestamo}")
@@ -80,6 +81,11 @@ public class Prestamo {
 	@OneToOne(mappedBy="prestamo", cascade=CascadeType.REMOVE)
 	@NoModify
 	private ReciboDePrestamo reciboDePrestamo;
+	
+	@OneToMany(mappedBy="prestamo", cascade=CascadeType.REMOVE)
+	@ListAction("ManyToMany.new")
+	@ListProperties("fecha, tecnico.nombre, prestamo.producto.serial, reporte")
+	private Collection<Mantenimiento> mantenimientos;
 	
 	public String getConduce() {
 		return conduce;
@@ -207,6 +213,14 @@ public class Prestamo {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public Collection<Mantenimiento> getMantenimientos() {
+		return mantenimientos;
+	}
+
+	public void setMantenimientos(Collection<Mantenimiento> mantenimientos) {
+		this.mantenimientos = mantenimientos;
 	}
 
 	@PrePersist
