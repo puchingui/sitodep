@@ -12,7 +12,7 @@ public class ProductoParaPrestamoValidator implements IValidator {
 	
 	public void validate(Messages errors) throws Exception {
 		if(producto.isPrestado() == true) {
-			errors.add("producto_prestado", producto.getSerial());
+			//errors.add("producto_prestado", producto.getSerial());
 		}
 	}
 
